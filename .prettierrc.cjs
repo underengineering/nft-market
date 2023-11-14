@@ -24,4 +24,4 @@ const config = {
     importOrderSortSpecifiers: true,
 };
 
-module.exports= config;
+module.exports = config;
