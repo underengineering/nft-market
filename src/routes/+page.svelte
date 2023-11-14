@@ -2,6 +2,7 @@
     import AccountSelector from "$components/AccountSelector.svelte";
     import CollectionOverview from "$components/CollectionOverview.svelte";
     import NftOverview from "$components/NftOverview.svelte";
+    import TabList from "$components/TabList.svelte";
     import WalletOverview from "$components/WalletOverview.svelte";
     import type { ICollection, INft } from "$lib/contract/icontract";
     import storage from "$lib/storage";
@@ -34,6 +35,10 @@
 
     let collections: Promise<ICollection[]>;
     $: collections = selectedAccount.then(() => contract.getCollections());
+
+    const tabs = ["My account", "Auctions", "NFTs"] as const;
+    type TTab = (typeof tabs)[number];
+    let activeTab: TTab = "My account";
 </script>
 
 <div class="flex h-full justify-center py-2">
@@ -50,18 +55,18 @@
         {/await}
         {#await selectedAccount then selectedAccount}
             <div
-                class="flex w-full flex-col items-center gap-4 rounded bg-background-secondary p-2 shadow"
+                class="flex h-full w-full flex-col items-center gap-4 rounded bg-background-secondary p-2 shadow"
             >
                 <WalletOverview account={selectedAccount} />
-                {#await nfts then nfts}
-                    <NftOverview
-                        selectedAccount={selectedAccount.address}
-                        {nfts}
-                    />
-                    {#await collections then collections}
-                        <CollectionOverview {collections} {nfts} />
+                <TabList {tabs} bind:activeTab />
+                {#if activeTab === "My account"}
+                    {#await nfts then nfts}
+                        <NftOverview
+                            selectedAccount={selectedAccount.address}
+                            {nfts}
+                        />
                     {/await}
-                {/await}
+                {/if}
             </div>
         {/await}
     </div>
