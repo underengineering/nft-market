@@ -4,9 +4,10 @@
     import { web3 } from "$lib/web3";
     import "../app.css";
     import Notification from "$components/Notification.svelte";
+    import { guardWeb3 } from "$lib/utils";
 
     async function isAuthorized() {
-        const accounts = await web3.eth.getAccounts();
+        const accounts = await guardWeb3(() => web3.eth.getAccounts());
         return accounts.length > 0;
     }
 

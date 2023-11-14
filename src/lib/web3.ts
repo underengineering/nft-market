@@ -3,6 +3,7 @@ import Web3 from "web3";
 import type { MetaMaskInpageProvider } from "@metamask/providers";
 
 import { MockContract } from "./contract/mock";
+import { guardWeb3 } from "./utils";
 
 type TWindowInjected = Window &
     typeof globalThis & { ethereum: MetaMaskInpageProvider };
@@ -18,7 +19,7 @@ export type IAccountInfo = {
 export function getAccountsWithBalance(): Promise<IAccountInfo[]> {
     return web3.eth.getAccounts().then((accounts) => {
         const accountsWithBalance = accounts.map(async (account) => {
-            const balance = await web3.eth.getBalance(account);
+            const balance = await guardWeb3(() => web3.eth.getBalance(account));
             return { address: account, balance };
         });
 
