@@ -1,10 +1,33 @@
+import { ContractExecutionError } from "web3";
+
 import { SVG } from "@svgdotjs/svg.js";
 
 import type { INft } from "./contract/icontract";
+import notifications from "./notifications";
 
 export function truncateAddress(address: string) {
     const hex = address.slice(2);
     return `0x${hex.slice(0, 5)}...${hex.slice(-5)}`;
+}
+
+export async function guardWeb3<T>(
+    func: () => Promise<T>,
+    title?: string,
+    fmt?: (err: ContractExecutionError) => string
+) {
+    try {
+        return await func();
+    } catch (err) {
+        if (err instanceof ContractExecutionError) {
+            notifications.add(
+                "error",
+                title ?? "Execution failed",
+                fmt !== undefined ? fmt(err) : err.innerError.message
+            );
+        }
+
+        throw err;
+    }
 }
 
 function remap(
