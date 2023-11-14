@@ -41,7 +41,7 @@
                 <button
                     class="flex justify-between gap-8 rounded border-primary-500 p-1 {isSelected
                         ? 'border-l-4 bg-primary-200'
-                        : 'bg-slate-300'}"
+                        : 'bg-slate-300'} hover:bg-slate-200"
                     on:click={() => onAccountSelected(account.address)}
                 >
                     <div class="flex flex-col items-start">
