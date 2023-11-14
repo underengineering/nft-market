@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 
 export interface ILocalStorage {
-    selectedAddress: string;
+    selectedAddress?: string;
 }
 
 function loadData() {
