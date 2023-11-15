@@ -8,15 +8,11 @@ export interface INft {
     collectionId?: bigint;
 }
 
-export interface IToken {
-    nft: INft;
-    amount: bigint;
-}
-
 export interface ICollection {
     id: bigint;
     name: string;
-    isClosed: boolean;
+    isOpen: boolean;
+    nftIds: bigint[];
 }
 
 export interface IBid {
@@ -33,9 +29,12 @@ export interface IAuction {
 export abstract class IContract {
     constructor(private readonly web3: Web3) {}
 
-    abstract getNfts(): Promise<INft[]>;
     abstract getCollections(): Promise<ICollection[]>;
+    abstract getNfts(): Promise<INft[]>;
     abstract getAuctions(nftId: bigint): Promise<IAuction[]>;
 
-    abstract getTokens(address: string): Promise<IToken[]>;
+    abstract getCollectionSalePrice(
+        collectionId: bigint
+    ): Promise<bigint | undefined>;
+    abstract getNftSalePrice(nftId: bigint): Promise<bigint | undefined>;
 }

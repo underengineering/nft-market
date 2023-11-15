@@ -3,10 +3,26 @@ import {
     type ICollection,
     IContract,
     type INft,
-    type IToken,
 } from "./icontract";
 
 export class MockContract extends IContract {
+    async getCollections(): Promise<ICollection[]> {
+        return [
+            {
+                id: 0n,
+                name: "based collection",
+                isOpen: false,
+                nftIds: [],
+            },
+            {
+                id: 1n,
+                name: "svelte collection",
+                isOpen: false,
+                nftIds: [],
+            },
+        ];
+    }
+
     async getNfts(): Promise<INft[]> {
         return [
             {
@@ -57,22 +73,17 @@ export class MockContract extends IContract {
         ];
     }
 
-    async getCollections(): Promise<ICollection[]> {
-        return [
-            { id: 0n, name: "based collection", isClosed: false },
-            {
-                id: 1n,
-                name: "svelte collection",
-                isClosed: false,
-            },
-        ];
-    }
-
     async getAuctions(nftId: bigint): Promise<IAuction[]> {
         return [];
     }
 
-    async getTokens(address: string): Promise<IToken[]> {
-        return [];
+    async getCollectionSalePrice(
+        collectionId: bigint
+    ): Promise<bigint | undefined> {
+        return undefined;
+    }
+
+    async getNftSalePrice(collectionId: bigint): Promise<bigint | undefined> {
+        return undefined;
     }
 }

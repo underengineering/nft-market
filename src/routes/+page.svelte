@@ -37,8 +37,7 @@
     $: collections = selectedAccount.then(() => contract.getCollections());
 
     const tabs = ["My account", "Auctions", "NFTs"] as const;
-    type TTab = (typeof tabs)[number];
-    let activeTab: TTab = "My account";
+    let activeTab = tabs[0];
 </script>
 
 <div class="flex h-full justify-center py-2">
@@ -65,6 +64,9 @@
                             selectedAccount={selectedAccount.address}
                             {nfts}
                         />
+                        {#await collections then collections}
+                            <CollectionOverview {collections} {nfts} />
+                        {/await}
                     {/await}
                 {/if}
             </div>
