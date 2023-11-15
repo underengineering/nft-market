@@ -30,6 +30,7 @@
             type={notification.type}
             title={notification.title}
             message={notification.message}
+            on:close={() => notifications.remove(notification.id)}
         />
     {/each}
 </div>
