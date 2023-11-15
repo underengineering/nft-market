@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
     type IAuction,
     type ICollection,
@@ -6,6 +7,19 @@ import {
 } from "./icontract";
 
 export class MockContract extends IContract {
+    set activeAddress(_value: string | undefined) {
+        // Unimplemented
+    }
+
+    get activeAddress(): string | undefined {
+        // Unimplemented
+        return "0x0";
+    }
+
+    async getAdmin(): Promise<string> {
+        return "0x0";
+    }
+
     async getCollections(): Promise<ICollection[]> {
         return [
             {
@@ -73,17 +87,28 @@ export class MockContract extends IContract {
         ];
     }
 
-    async getAuction(collectionId: bigint): Promise<IAuction | undefined> {
+    async getAuction(_collectionId: bigint): Promise<IAuction | undefined> {
         return undefined;
     }
 
     async getCollectionSalePrice(
-        collectionId: bigint
+        _collectionId: bigint
     ): Promise<bigint | undefined> {
         return undefined;
     }
 
-    async getNftSalePrice(collectionId: bigint): Promise<bigint | undefined> {
+    async getNftSalePrice(_collectionId: bigint): Promise<bigint | undefined> {
         return undefined;
+    }
+
+    async mintCommonNft(_name: string): Promise<string> {
+        return "0x0";
+    }
+
+    async mintCollectibleNft(
+        _name: string,
+        _collectionId: bigint
+    ): Promise<string> {
+        return "0x0";
     }
 }

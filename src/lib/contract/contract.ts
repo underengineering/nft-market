@@ -10,19 +10,38 @@ import {
 } from "./icontract";
 
 export class Contract extends IContract {
-    constructor(private readonly contract: Web3Contract<typeof abi>) {
+    constructor(
+        private _activeAddress: string | undefined,
+        private readonly contract: Web3Contract<typeof abi>
+    ) {
         super();
+    }
+
+    set activeAddress(value: string | undefined) {
+        this._activeAddress = value;
+    }
+
+    get activeAddress(): string | undefined {
+        return this._activeAddress;
+    }
+
+    async getAdmin(): Promise<string> {
+        return this.contract.methods
+            .owner()
+            .call({ from: this._activeAddress });
     }
 
     async getCollections(): Promise<ICollection[]> {
         return await guardWeb3(() =>
-            this.contract.methods.getCollections().call()
+            this.contract.methods
+                .getCollections()
+                .call({ from: this._activeAddress })
         );
     }
 
     async getNfts(): Promise<INft[]> {
         const nfts = await guardWeb3(() =>
-            this.contract.methods.getNfts().call()
+            this.contract.methods.getNfts().call({ from: this._activeAddress })
         );
         return nfts.map((nft, idx) => ({
             ...nft,
@@ -33,9 +52,11 @@ export class Contract extends IContract {
         }));
     }
 
-    async getAuctions(collectionId: bigint): Promise<IAuction | undefined> {
+    async getAuction(collectionId: bigint): Promise<IAuction | undefined> {
         const auction = await guardWeb3(() =>
-            this.contract.methods.getAuction(collectionId).call()
+            this.contract.methods
+                .getAuction(collectionId)
+                .call({ from: this._activeAddress })
         );
         if (!auction.isValid) return undefined;
 
@@ -67,10 +88,31 @@ export class Contract extends IContract {
         const entry = await guardWeb3(() =>
             this.contract.methods
                 .collectionSaleData(nftId as unknown as string)
-                .call()
+                .call({ from: this._activeAddress })
         );
         if (!entry.isValid) return undefined;
 
         return entry.price as bigint;
+    }
+
+    async mintCommonNft(name: string): Promise<string> {
+        const tx = await guardWeb3(() =>
+            this.contract.methods
+                .createCommonNft(name)
+                .send({ from: this._activeAddress })
+        );
+        return tx.transactionHash;
+    }
+
+    async mintCollectibleNft(
+        name: string,
+        collectionId: bigint
+    ): Promise<string> {
+        const tx = await guardWeb3(() =>
+            this.contract.methods
+                .createCollectibleNft(name, collectionId)
+                .send({ from: this._activeAddress })
+        );
+        return tx.transactionHash;
     }
 }

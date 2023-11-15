@@ -25,12 +25,23 @@ export interface IAuction {
 }
 
 export abstract class IContract {
+    abstract set activeAddress(value: string | undefined);
+    abstract get activeAddress(): string | undefined;
+
+    abstract getAdmin(): Promise<string>;
+
     abstract getCollections(): Promise<ICollection[]>;
     abstract getNfts(): Promise<INft[]>;
-    abstract getAuctions(collectionId: bigint): Promise<IAuction | undefined>;
+    abstract getAuction(collectionId: bigint): Promise<IAuction | undefined>;
 
     abstract getCollectionSalePrice(
         collectionId: bigint
     ): Promise<bigint | undefined>;
     abstract getNftSalePrice(nftId: bigint): Promise<bigint | undefined>;
+
+    abstract mintCommonNft(name: string): Promise<string>;
+    abstract mintCollectibleNft(
+        name: string,
+        collectionId: bigint
+    ): Promise<string>;
 }
