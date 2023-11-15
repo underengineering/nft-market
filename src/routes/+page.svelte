@@ -1,16 +1,14 @@
 <script lang="ts">
     import AccountSelector from "$components/AccountSelector.svelte";
     import CollectionOverview from "$components/CollectionOverview.svelte";
+    import NftList from "$components/NftList.svelte";
     import NftOverview from "$components/NftOverview.svelte";
     import TabList from "$components/TabList.svelte";
     import WalletOverview from "$components/WalletOverview.svelte";
+    import contract from "$lib/contract";
     import type { ICollection, INft } from "$lib/contract/icontract";
     import storage from "$lib/storage";
-    import {
-        contract,
-        getAccountsWithBalance,
-        type IAccountInfo,
-    } from "$lib/web3";
+    import { getAccountsWithBalance, type IAccountInfo } from "$lib/web3";
 
     const accounts = getAccountsWithBalance();
     let selectedAccount: Promise<IAccountInfo>;
@@ -36,8 +34,9 @@
     let collections: Promise<ICollection[]>;
     $: collections = selectedAccount.then(() => contract.getCollections());
 
-    const tabs = ["My account", "Auctions", "NFTs"] as const;
-    let activeTab = tabs[0];
+    const tabs = ["My account", "Auctions", "NFTs", "Collections"] as const;
+    type TTab = (typeof tabs)[number];
+    let activeTab: TTab = tabs[0];
 </script>
 
 <div class="flex h-full justify-center py-2">
@@ -68,6 +67,8 @@
                             <CollectionOverview {collections} {nfts} />
                         {/await}
                     {/await}
+                {:else if activeTab === "NFTs"}
+                    <NftList selectedAccount={selectedAccount.address} />
                 {/if}
             </div>
         {/await}
