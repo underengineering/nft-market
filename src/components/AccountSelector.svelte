@@ -1,7 +1,7 @@
 <script lang="ts">
     import MaterialSymbolsExpandMore from "~icons/material-symbols/expand-more";
     import MaterialSymbolsExpandLess from "~icons/material-symbols/expand-less";
-    import { truncateAddress } from "$lib/utils";
+    import { truncateAddress, truncateStringFloat } from "$lib/utils";
     import { web3, type IAccountInfo } from "$lib/web3";
     import storage from "$lib/storage";
 
@@ -51,7 +51,9 @@
                         >
                     </div>
                     <span class="whitespace-nowrap"
-                        >{web3.utils.fromWei(account.balance, "ether")} ETH</span
+                        >{truncateStringFloat(
+                            web3.utils.fromWei(account.balance, "ether")
+                        )} ETH</span
                     >
                 </button>
             {/each}

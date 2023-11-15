@@ -2,7 +2,7 @@
     import MaterialSymbolsContentCopy from "~icons/material-symbols/content-copy";
     import type { IAccountInfo } from "$lib/web3";
     import { web3 } from "$lib/web3";
-    import { truncateAddress } from "$lib/utils";
+    import { truncateAddress, truncateStringFloat } from "$lib/utils";
 
     export let account: IAccountInfo;
 </script>
@@ -16,6 +16,6 @@
         <MaterialSymbolsContentCopy />
     </button>
     <span class="text-3xl"
-        >{web3.utils.fromWei(account.balance, "ether")} ETH</span
+        >{truncateStringFloat(web3.utils.fromWei(account.balance, "ether"))} ETH</span
     >
 </div>

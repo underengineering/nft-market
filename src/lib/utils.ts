@@ -1,4 +1,4 @@
-import { ContractExecutionError } from "web3";
+import Web3, { ContractExecutionError } from "web3";
 
 import { SVG } from "@svgdotjs/svg.js";
 
@@ -28,6 +28,26 @@ export async function guardWeb3<T>(
 
         throw err;
     }
+}
+
+export function fromWei(value: bigint) {
+    const UNITS = Object.entries(Web3.utils.ethUnitMap).sort((a, b) =>
+        Number(b[1] - a[1])
+    );
+
+    for (const [unit, unitValue] of UNITS) {
+        if (value < unitValue || !unitValue) continue;
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return `${Web3.utils.fromWei(value, unit as any)} ${unit}`;
+    }
+
+    return `${Web3.utils.fromWei(value, "ether")} ether`;
+}
+
+export function truncateStringFloat(value: string, precision: number = 2) {
+    const [int, frac] = value.split(".");
+    return `${int}.${frac.slice(0, precision)}`;
 }
 
 function remap(
