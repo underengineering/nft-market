@@ -22,5 +22,5 @@
         >
     </div>
     <div class="h-[1px] w-full rounded-full bg-primary-950"></div>
-    <p>{message}</p>
+    <p class="break-words">{message}</p>
 </div>
