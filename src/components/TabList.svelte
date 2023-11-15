@@ -8,8 +8,8 @@
         {@const isActive = tab === activeTab}
         <li
             class="flex flex-1 {isActive
-                ? 'border-b-2 border-primary-600 text-primary-600'
-                : ''}"
+                ? 'border-b-2 border-primary-500 text-primary-500'
+                : 'hover:text-primary-500'}"
         >
             <button
                 class="flex-1 text-lg font-bold"
