@@ -10,6 +10,17 @@ export function truncateAddress(address: string) {
     return `0x${hex.slice(0, 5)}...${hex.slice(-5)}`;
 }
 
+interface IMetaMaskError<TData = unknown> extends Error {
+    data: TData;
+}
+
+function isContractExecutionError(
+    err: Error
+): err is IMetaMaskError<ContractExecutionError> {
+    const metaMaskError = err as IMetaMaskError<ContractExecutionError>;
+    return metaMaskError.data.code === -32000;
+}
+
 export async function guardWeb3<T>(
     func: () => Promise<T>,
     title?: string,
@@ -18,12 +29,16 @@ export async function guardWeb3<T>(
     try {
         return await func();
     } catch (err) {
-        if (err instanceof ContractExecutionError) {
-            notifications.add(
-                "error",
-                title ?? "Execution failed",
-                fmt !== undefined ? fmt(err) : err.innerError.message
-            );
+        if (err instanceof Error) {
+            if (isContractExecutionError(err)) {
+                notifications.add(
+                    "error",
+                    title ?? "Contract execution failed",
+                    fmt !== undefined ? fmt(err.data) : err.data.message
+                );
+            } else {
+                notifications.add("error", "Unhandled error", err.message);
+            }
         }
 
         throw err;
