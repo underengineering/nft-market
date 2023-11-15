@@ -2,14 +2,19 @@ import Web3 from "web3";
 
 import type { MetaMaskInpageProvider } from "@metamask/providers";
 
-import { MockContract } from "./contract/mock";
+import abi from "./abi";
+import { Contract } from "./contract/contract";
 import { guardWeb3 } from "./utils";
 
 type TWindowInjected = Window &
     typeof globalThis & { ethereum: MetaMaskInpageProvider };
 const provider = (window as TWindowInjected).ethereum;
 export const web3 = new Web3({ provider });
-export const contract = new MockContract(web3);
+
+const CONTRACT_ADDRESS = "0x8E409976e1EfEb16090674C1ce9016009DD22c01";
+export const contract = new Contract(
+    new web3.eth.Contract(abi, CONTRACT_ADDRESS)
+);
 
 export type IAccountInfo = {
     address: string;

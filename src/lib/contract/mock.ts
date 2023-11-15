@@ -73,8 +73,8 @@ export class MockContract extends IContract {
         ];
     }
 
-    async getAuctions(nftId: bigint): Promise<IAuction[]> {
-        return [];
+    async getAuction(collectionId: bigint): Promise<IAuction | undefined> {
+        return undefined;
     }
 
     async getCollectionSalePrice(

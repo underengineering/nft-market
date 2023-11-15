@@ -1,5 +1,3 @@
-import type Web3 from "web3";
-
 export interface INft {
     id: bigint;
     owner: string;
@@ -27,11 +25,9 @@ export interface IAuction {
 }
 
 export abstract class IContract {
-    constructor(private readonly web3: Web3) {}
-
     abstract getCollections(): Promise<ICollection[]>;
     abstract getNfts(): Promise<INft[]>;
-    abstract getAuctions(nftId: bigint): Promise<IAuction[]>;
+    abstract getAuctions(collectionId: bigint): Promise<IAuction | undefined>;
 
     abstract getCollectionSalePrice(
         collectionId: bigint
