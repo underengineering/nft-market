@@ -16,15 +16,14 @@ export type IAccountInfo = {
     balance: bigint;
 };
 
-export function getAccountsWithBalance(): Promise<IAccountInfo[]> {
-    return web3.eth.getAccounts().then((accounts) => {
-        const accountsWithBalance = accounts.map(async (account) => {
-            const balance = await guardWeb3(() => web3.eth.getBalance(account));
-            return { address: account, balance };
-        });
-
-        return Promise.all(accountsWithBalance);
+export async function getAccountsWithBalance(): Promise<IAccountInfo[]> {
+    const accounts = await web3.eth.getAccounts();
+    const accountsWithBalance = accounts.map(async (account) => {
+        const balance = await guardWeb3(() => web3.eth.getBalance(account));
+        return { address: account, balance };
     });
+
+    return await Promise.all(accountsWithBalance);
 }
 
 /*
