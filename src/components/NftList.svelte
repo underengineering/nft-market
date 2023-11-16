@@ -32,7 +32,11 @@
 
         try {
             const txHash = await contract.mintCommonNft(nftName);
-            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+            notifications.add(
+                "success",
+                "NFT successfully minted",
+                `Tx hash: ${txHash}`
+            );
         } finally {
             nftName = "";
             mintDialog.close();

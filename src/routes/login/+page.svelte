@@ -11,6 +11,7 @@
 
         try {
             await requestAccounts();
+            notifications.add("success", "Logged in successfully", "");
             goto("/");
         } catch (err) {
             const message = (err as Error).message ?? "Unknown error";

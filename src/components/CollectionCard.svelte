@@ -47,7 +47,11 @@
                 startPrice,
                 maxPrice
             );
-            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+            notifications.add(
+                "success",
+                "Started auction successfully",
+                `Tx hash: ${txHash}`
+            );
         } finally {
             collectionDialog.close();
         }
@@ -60,7 +64,11 @@
 
         try {
             const txHash = await contract.joinAuction(collection.id, bidPrice);
-            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+            notifications.add(
+                "success",
+                "Joined auction successfully",
+                `Tx hash: ${txHash}`
+            );
         } finally {
             collectionDialog.close();
         }
@@ -71,7 +79,11 @@
 
         try {
             const txHash = await contract.finishAuction(collection.id);
-            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+            notifications.add(
+                "success",
+                "Auction finished successfully",
+                `Tx hash: ${txHash}`
+            );
         } finally {
             collectionDialog.close();
         }

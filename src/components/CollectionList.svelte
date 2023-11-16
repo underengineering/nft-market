@@ -50,7 +50,11 @@
                 collectionName,
                 nftNames
             );
-            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+            notifications.add(
+                "success",
+                "Collection minted successfully",
+                `Tx hash: ${txHash}`
+            );
         } finally {
             collectionName = "";
             mintDialog.close();

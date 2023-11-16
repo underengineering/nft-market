@@ -44,7 +44,11 @@
 
         try {
             const txHash = await contract.placeNftOnSell(nft.id, price);
-            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+            notifications.add(
+                "success",
+                "NFT successfully sold",
+                `Tx hash: ${txHash}`
+            );
         } finally {
             price = 0n;
             nftDialog.close();
@@ -56,7 +60,11 @@
 
         try {
             const txHash = await contract.buyNft(nft.id, nft.saleData.price);
-            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+            notifications.add(
+                "success",
+                "NFT successfully purchased",
+                `Tx hash: ${txHash}`
+            );
         } finally {
             nftDialog.close();
         }
