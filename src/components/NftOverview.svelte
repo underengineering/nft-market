@@ -10,11 +10,15 @@
     $: ownedNfts = nfts.filter((nft) => nft.owner === $storage.selectedAddress);
 </script>
 
-<div class="flex w-full flex-col gap-2">
-    <h2 class="text-center text-3xl">Your NFTs</h2>
-    <EvenGrid columnSize="146px">
-        {#each ownedNfts as nft}
-            <NftCard {nft} />
-        {/each}
-    </EvenGrid>
+<div class="flex w-full flex-col items-center gap-2">
+    <h2 class="text-3xl">Your NFTs</h2>
+    {#if ownedNfts.length > 0}
+        <EvenGrid columnSize="146px">
+            {#each ownedNfts as nft}
+                <NftCard {nft} />
+            {/each}
+        </EvenGrid>
+    {:else}
+        <span class="font-thin">Empty ...</span>
+    {/if}
 </div>

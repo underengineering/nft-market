@@ -114,14 +114,18 @@
             >
         {/if}
     </div>
-    <EvenGrid columnSize="146px">
-        {#await Promise.all( [filteredCollections, nfts] ) then [collections, nfts]}
-            {#each collections as collection}
-                {@const collectionNfts = nfts.filter((nft) =>
-                    collection.nftIds.includes(nft.id)
-                )}
-                <CollectionCard {collection} nfts={collectionNfts} />
-            {/each}
-        {/await}
-    </EvenGrid>
+    {#await Promise.all([filteredCollections, nfts]) then [collections, nfts]}
+        {#if collections.length > 0}
+            <EvenGrid columnSize="146px">
+                {#each collections as collection}
+                    {@const collectionNfts = nfts.filter((nft) =>
+                        collection.nftIds.includes(nft.id)
+                    )}
+                    <CollectionCard {collection} nfts={collectionNfts} />
+                {/each}
+            </EvenGrid>
+        {:else}
+            <span class="font-thin">Empty ...</span>
+        {/if}
+    {/await}
 </div>

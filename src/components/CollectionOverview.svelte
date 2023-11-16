@@ -15,11 +15,15 @@
     }));
 </script>
 
-<div class="flex w-full flex-col gap-2">
+<div class="flex w-full flex-col items-center gap-2">
     <h2 class="text-center text-3xl">Collections</h2>
-    <EvenGrid columnSize="146px">
-        {#each ownedCollections as collection}
-            <CollectionCard {collection} nfts={collection.nfts} />
-        {/each}
-    </EvenGrid>
+    {#if ownedCollections.length > 0}
+        <EvenGrid columnSize="146px">
+            {#each ownedCollections as collection}
+                <CollectionCard {collection} nfts={collection.nfts} />
+            {/each}
+        </EvenGrid>
+    {:else}
+        <span class="text-center font-light">Empty ...</span>
+    {/if}
 </div>

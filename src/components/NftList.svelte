@@ -76,11 +76,15 @@
             >
         {/if}
     </div>
-    <EvenGrid columnSize="146px">
-        {#await filteredNfts then nfts}
-            {#each nfts as nft}
-                <NftCard {nft} />
-            {/each}
-        {/await}
-    </EvenGrid>
+    {#await filteredNfts then nfts}
+        {#if nfts.length > 0}
+            <EvenGrid columnSize="146px">
+                {#each nfts as nft}
+                    <NftCard {nft} />
+                {/each}
+            </EvenGrid>
+        {:else}
+            <span class="text-center font-thin">Empty ...</span>
+        {/if}
+    {/await}
 </div>
