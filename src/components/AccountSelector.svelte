@@ -4,6 +4,7 @@
     import { truncateAddress, truncateStringFloat } from "$lib/utils";
     import { web3, type IAccountInfo } from "$lib/web3";
     import storage from "$lib/storage";
+    import contract from "$lib/contract";
 
     export let accounts: IAccountInfo[];
 
@@ -11,6 +12,8 @@
     $: accountIdx = accounts.findIndex(
         (account) => account.address === $storage.selectedAddress
     );
+
+    const admin = contract.getAdmin();
 
     let expanded = false;
     function onAccountSelected(account: string) {
@@ -50,11 +53,18 @@
                             >{truncateAddress(account.address)}</span
                         >
                     </div>
-                    <span class="whitespace-nowrap"
-                        >{truncateStringFloat(
-                            web3.utils.fromWei(account.balance, "ether")
-                        )} ETH</span
-                    >
+                    <div class="flex flex-col items-end">
+                        <span class="whitespace-nowrap"
+                            >{truncateStringFloat(
+                                web3.utils.fromWei(account.balance, "ether")
+                            )} ETH</span
+                        >
+                        {#await admin then admin}
+                            {#if account.address === admin}
+                                <span>ADMIN</span>
+                            {/if}
+                        {/await}
+                    </div>
                 </button>
             {/each}
         </div>
