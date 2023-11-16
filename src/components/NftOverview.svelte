@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { INft } from "$lib/contract/icontract";
     import storage from "$lib/storage";
+    import EvenGrid from "./EvenGrid.svelte";
     import NftCard from "./NftCard.svelte";
 
     export let nfts: INft[];
@@ -11,16 +12,9 @@
 
 <div class="flex w-full flex-col gap-2">
     <h2 class="text-center text-3xl">Your NFTs</h2>
-    <div id="grid" class="grid w-full justify-evenly">
+    <EvenGrid columnSize="146px">
         {#each ownedNfts as nft}
             <NftCard {nft} />
         {/each}
-    </div>
+    </EvenGrid>
 </div>
-
-<style lang="postcss">
-    #grid {
-        grid-template-columns: repeat(auto-fill, 146px);
-        grid-gap: 1rem;
-    }
-</style>
