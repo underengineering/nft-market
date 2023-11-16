@@ -137,7 +137,8 @@
 </dialog>
 <div class="flex max-w-[146px] flex-col gap-1 rounded bg-slate-300 p-2">
     <button class="nft-card-container relative h-32 w-32" on:click={onClick}>
-        {#each nfts.slice(0, 3) as nft, idx}
+        <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+        {#each nfts.slice(0, 3) as _, idx}
             <div
                 class="nft-card absolute left-0 top-0 h-32 w-32 self-center rounded transition-transform"
                 style="--card-off: {(idx - 1) * 6}px; --card-rotation: {(idx -
