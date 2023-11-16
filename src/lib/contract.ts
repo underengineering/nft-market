@@ -5,7 +5,7 @@ import { Contract } from "./contract/contract";
 import storage from "./storage";
 import { web3 } from "./web3";
 
-const CONTRACT_ADDRESS = "0x06cc7096339e23A5E9e3F0D2fd6f58325b4663AA";
+const CONTRACT_ADDRESS = "0xFC6B3330357F84F3bb94318934C9c56b39D51a51";
 export const contract = new Contract(
     get(storage).selectedAddress,
     new web3.eth.Contract(abi, CONTRACT_ADDRESS)

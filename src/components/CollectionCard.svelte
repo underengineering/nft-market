@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { ICollection, INft } from "$lib/contract/icontract";
     import { generateNftBackground } from "$lib/utils";
+    import EvenGrid from "./EvenGrid.svelte";
     import NftCard from "./NftCard.svelte";
 
     export let nfts: INft[];
@@ -27,15 +28,15 @@
 </script>
 
 <dialog
-    class="flex-col rounded bg-background-secondary p-3 shadow-xl open:flex"
+    class="w-full max-w-4xl flex-col rounded bg-background-secondary p-3 shadow-xl open:flex"
     bind:this={nftDialog}
 >
     <h2 class="text-center text-3xl">NFTs in this collection</h2>
-    <div class="flex w-full flex-wrap justify-around gap-2">
+    <EvenGrid columnSize="146px">
         {#each nfts as nft}
             <NftCard {nft} />
         {/each}
-    </div>
+    </EvenGrid>
 </dialog>
 <div class="flex max-w-[146px] flex-col gap-1 rounded bg-slate-300 p-2">
     <button class="nft-card-container relative h-32 w-32" on:click={onClick}>
@@ -49,7 +50,12 @@
             ></div>
         {/each}
     </button>
-    <span class="text-ellipsis whitespace-nowrap">{collection.name}</span>
+    <div class="flex flex-col leading-tight">
+        <span class="text-xs">{collection.id}</span>
+        <span class="overflow-hidden text-ellipsis whitespace-nowrap"
+            >{collection.name}</span
+        >
+    </div>
 </div>
 
 <style>

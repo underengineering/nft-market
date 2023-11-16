@@ -1,10 +1,5 @@
 export default [
     {
-        inputs: [],
-        stateMutability: "nonpayable",
-        type: "constructor",
-    },
-    {
         inputs: [
             {
                 internalType: "address",
@@ -228,6 +223,75 @@ export default [
         inputs: [
             {
                 internalType: "uint256",
+                name: "collectionId",
+                type: "uint256",
+            },
+        ],
+        name: "finishAuction",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "collectionId",
+                type: "uint256",
+            },
+        ],
+        name: "joinAuction",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "string",
+                name: "name",
+                type: "string",
+            },
+            {
+                internalType: "string[]",
+                name: "nftNames",
+                type: "string[]",
+            },
+        ],
+        name: "mintCollection",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "string",
+                name: "name",
+                type: "string",
+            },
+        ],
+        name: "mintCommonNft",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
                 name: "id",
                 type: "uint256",
             },
@@ -236,6 +300,136 @@ export default [
         outputs: [],
         stateMutability: "payable",
         type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "id",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "price",
+                type: "uint256",
+            },
+        ],
+        name: "placeNftOnSale",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "from",
+                type: "address",
+            },
+            {
+                internalType: "address",
+                name: "to",
+                type: "address",
+            },
+            {
+                internalType: "uint256[]",
+                name: "ids",
+                type: "uint256[]",
+            },
+            {
+                internalType: "uint256[]",
+                name: "values",
+                type: "uint256[]",
+            },
+            {
+                internalType: "bytes",
+                name: "data",
+                type: "bytes",
+            },
+        ],
+        name: "safeBatchTransferFrom",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "from",
+                type: "address",
+            },
+            {
+                internalType: "address",
+                name: "to",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "id",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256",
+            },
+            {
+                internalType: "bytes",
+                name: "data",
+                type: "bytes",
+            },
+        ],
+        name: "safeTransferFrom",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "operator",
+                type: "address",
+            },
+            {
+                internalType: "bool",
+                name: "approved",
+                type: "bool",
+            },
+        ],
+        name: "setApprovalForAll",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "id",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "startPrice",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "maxPrice",
+                type: "uint256",
+            },
+        ],
+        name: "startAuction",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [],
+        stateMutability: "nonpayable",
+        type: "constructor",
     },
     {
         inputs: [
@@ -322,30 +516,6 @@ export default [
                 type: "uint256",
             },
         ],
-        name: "collectionSaleData",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "price",
-                type: "uint256",
-            },
-            {
-                internalType: "bool",
-                name: "isValid",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
         name: "collections",
         outputs: [
             {
@@ -365,76 +535,25 @@ export default [
     {
         inputs: [
             {
-                internalType: "string",
-                name: "name",
-                type: "string",
-            },
-            {
-                internalType: "uint256",
-                name: "collectionId",
-                type: "uint256",
-            },
-        ],
-        name: "createCollectibleNft",
-        outputs: [
-            {
                 internalType: "uint256",
                 name: "",
                 type: "uint256",
             },
         ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "string",
-                name: "name",
-                type: "string",
-            },
-        ],
-        name: "createCollection",
+        name: "collectionSaleData",
         outputs: [
             {
                 internalType: "uint256",
-                name: "",
+                name: "price",
                 type: "uint256",
             },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
             {
-                internalType: "string",
-                name: "name",
-                type: "string",
+                internalType: "bool",
+                name: "isValid",
+                type: "bool",
             },
         ],
-        name: "createCommonNft",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "collectionId",
-                type: "uint256",
-            },
-        ],
-        name: "finishAuction",
-        outputs: [],
-        stateMutability: "nonpayable",
+        stateMutability: "view",
         type: "function",
     },
     {
@@ -583,43 +702,6 @@ export default [
         inputs: [
             {
                 internalType: "uint256",
-                name: "collectionId",
-                type: "uint256",
-            },
-        ],
-        name: "joinAuction",
-        outputs: [],
-        stateMutability: "payable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "nftSaleData",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "price",
-                type: "uint256",
-            },
-            {
-                internalType: "bool",
-                name: "isValid",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
             },
@@ -651,6 +733,30 @@ export default [
         type: "function",
     },
     {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        name: "nftSaleData",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "price",
+                type: "uint256",
+            },
+            {
+                internalType: "bool",
+                name: "isValid",
+                type: "bool",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
         inputs: [],
         name: "owner",
         outputs: [
@@ -661,131 +767,6 @@ export default [
             },
         ],
         stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "id",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "price",
-                type: "uint256",
-            },
-        ],
-        name: "placeNftOnSale",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "from",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "to",
-                type: "address",
-            },
-            {
-                internalType: "uint256[]",
-                name: "ids",
-                type: "uint256[]",
-            },
-            {
-                internalType: "uint256[]",
-                name: "values",
-                type: "uint256[]",
-            },
-            {
-                internalType: "bytes",
-                name: "data",
-                type: "bytes",
-            },
-        ],
-        name: "safeBatchTransferFrom",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "from",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "to",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "id",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "value",
-                type: "uint256",
-            },
-            {
-                internalType: "bytes",
-                name: "data",
-                type: "bytes",
-            },
-        ],
-        name: "safeTransferFrom",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "operator",
-                type: "address",
-            },
-            {
-                internalType: "bool",
-                name: "approved",
-                type: "bool",
-            },
-        ],
-        name: "setApprovalForAll",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "id",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "startPrice",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "maxPrice",
-                type: "uint256",
-            },
-        ],
-        name: "startAuction",
-        outputs: [],
-        stateMutability: "nonpayable",
         type: "function",
     },
     {

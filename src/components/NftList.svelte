@@ -5,16 +5,13 @@
     import MaterialSymbolsAdd from "~icons/material-symbols/add";
     import contract from "$lib/contract";
     import notifications from "$lib/notifications";
+    import EvenGrid from "./EvenGrid.svelte";
 
-    export let selectedAccount: string;
+    export let isAdmin: boolean;
 
     let mintDialog: HTMLDialogElement | undefined;
 
     const nfts = contract.getNfts();
-    const admin = contract.getAdmin();
-
-    let isAdmin = false;
-    $: admin.then((admin) => (isAdmin = admin === selectedAccount));
 
     let searchQuery = "";
     let filteredNfts = nfts;
@@ -64,31 +61,26 @@
     </form>
 </dialog>
 
-<div class="flex w-full flex-col items-center">
-    <div class="flex items-center gap-2">
-        <MaterialSymbolsSearchRounded /><input
-            class="rounded"
-            type="text"
-            bind:value={searchQuery}
-        />
+<div class="flex w-full flex-col items-center gap-2">
+    <div class="flex w-full justify-center gap-2">
+        <div class="flex items-center gap-2">
+            <MaterialSymbolsSearchRounded /><input
+                class="rounded"
+                type="text"
+                bind:value={searchQuery}
+            />
+        </div>
         {#if isAdmin}
             <Button class="flex items-center gap-1" on:click={onOpenMintDialog}
                 ><MaterialSymbolsAdd />Mint new NFT</Button
             >
         {/if}
     </div>
-    <div id="grid" class="grid w-full justify-evenly">
+    <EvenGrid columnSize="146px">
         {#await filteredNfts then nfts}
             {#each nfts as nft}
                 <NftCard {nft} />
             {/each}
         {/await}
-    </div>
+    </EvenGrid>
 </div>
-
-<style lang="postcss">
-    #grid {
-        grid-template-columns: repeat(auto-fill, 146px);
-        grid-gap: 1rem;
-    }
-</style>

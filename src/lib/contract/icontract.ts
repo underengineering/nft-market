@@ -40,8 +40,5 @@ export abstract class IContract {
     abstract getNftSalePrice(nftId: bigint): Promise<bigint | undefined>;
 
     abstract mintCommonNft(name: string): Promise<string>;
-    abstract mintCollectibleNft(
-        name: string,
-        collectionId: bigint
-    ): Promise<string>;
+    abstract mintCollection(name: string, nftNames: string[]): Promise<string>;
 }

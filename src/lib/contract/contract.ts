@@ -32,11 +32,16 @@ export class Contract extends IContract {
     }
 
     async getCollections(): Promise<ICollection[]> {
-        return await guardWeb3(() =>
+        const collections = await guardWeb3(() =>
             this.contract.methods
                 .getCollections()
                 .call({ from: this._activeAddress })
         );
+        return collections.map((collection, idx) => ({
+            ...collection,
+            id: BigInt(idx),
+            nftIds: collection.nftIds as bigint[],
+        }));
     }
 
     async getNfts(): Promise<INft[]> {
@@ -98,19 +103,16 @@ export class Contract extends IContract {
     async mintCommonNft(name: string): Promise<string> {
         const tx = await guardWeb3(() =>
             this.contract.methods
-                .createCommonNft(name)
+                .mintCommonNft(name)
                 .send({ from: this._activeAddress })
         );
         return tx.transactionHash;
     }
 
-    async mintCollectibleNft(
-        name: string,
-        collectionId: bigint
-    ): Promise<string> {
+    async mintCollection(name: string, nftNames: string[]): Promise<string> {
         const tx = await guardWeb3(() =>
             this.contract.methods
-                .createCollectibleNft(name, collectionId)
+                .mintCollection(name, nftNames)
                 .send({ from: this._activeAddress })
         );
         return tx.transactionHash;

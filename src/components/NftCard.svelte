@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { INft } from "$lib/contract/icontract";
-    import { generateNftBackground } from "$lib/utils";
+    import { generateNftBackground, truncateAddress } from "$lib/utils";
 
     export let nft: INft;
 
@@ -9,12 +9,16 @@
         generateNftBackground(nft, backgroundContainer);
 </script>
 
-<div class="flex w-[146px] flex-col rounded bg-slate-300 p-2">
+<div class="flex min-w-[146px] flex-col gap-1 rounded bg-slate-300 p-2">
     <div
-        class="h-32 w-32 self-center rounded"
+        class="h-auto w-full self-center rounded"
         bind:this={backgroundContainer}
     ></div>
-    <span class="overflow-hidden text-ellipsis whitespace-nowrap"
-        >{nft.name}</span
-    >
+    <div class="flex flex-col leading-tight">
+        <span class="text-xs">{nft.id}</span>
+        <span class="overflow-hidden text-ellipsis whitespace-nowrap"
+            >{nft.name}</span
+        >
+        <span class="text-xs font-light">{truncateAddress(nft.owner)}</span>
+    </div>
 </div>

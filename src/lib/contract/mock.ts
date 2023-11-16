@@ -105,10 +105,7 @@ export class MockContract extends IContract {
         return "0x0";
     }
 
-    async mintCollectibleNft(
-        _name: string,
-        _collectionId: bigint
-    ): Promise<string> {
+    async mintCollection(_name: string, _nftNames: string[]): Promise<string> {
         return "0x0";
     }
 }

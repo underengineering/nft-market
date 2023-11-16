@@ -21,7 +21,7 @@
     }
 </script>
 
-<div class="flex h-full justify-center">
+<div class="flex min-h-screen justify-center">
     <div class="flex flex-col justify-center">
         <div
             class="flex flex-col gap-2 rounded bg-background-secondary px-32 py-20"

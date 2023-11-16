@@ -1,12 +1,12 @@
 <script lang="ts">
     import AccountSelector from "$components/AccountSelector.svelte";
+    import CollectionList from "$components/CollectionList.svelte";
     import CollectionOverview from "$components/CollectionOverview.svelte";
     import NftList from "$components/NftList.svelte";
     import NftOverview from "$components/NftOverview.svelte";
     import TabList from "$components/TabList.svelte";
     import WalletOverview from "$components/WalletOverview.svelte";
     import contract from "$lib/contract";
-    import type { ICollection, INft } from "$lib/contract/icontract";
     import storage from "$lib/storage";
     import { getAccountsWithBalance, type IAccountInfo } from "$lib/web3";
 
@@ -28,11 +28,13 @@
         });
     }
 
-    let nfts: Promise<INft[]>;
-    $: nfts = selectedAccount.then(() => contract.getNfts());
+    const nfts = contract.getNfts();
+    const collections = contract.getCollections();
 
-    let collections: Promise<ICollection[]>;
-    $: collections = selectedAccount.then(() => contract.getCollections());
+    let isAdmin: Promise<boolean>;
+    $: isAdmin = Promise.all([selectedAccount, contract.getAdmin()]).then(
+        ([selectedAccount, admin]) => selectedAccount.address === admin
+    );
 
     const tabs = ["My account", "Auctions", "NFTs", "Collections"] as const;
     type TTab = (typeof tabs)[number];
@@ -68,7 +70,13 @@
                         {/await}
                     {/await}
                 {:else if activeTab === "NFTs"}
-                    <NftList selectedAccount={selectedAccount.address} />
+                    {#await isAdmin then isAdmin}
+                        <NftList {isAdmin} />
+                    {/await}
+                {:else if activeTab === "Collections"}
+                    {#await isAdmin then isAdmin}
+                        <CollectionList {isAdmin} />
+                    {/await}
                 {/if}
             </div>
         {/await}
