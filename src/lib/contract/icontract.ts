@@ -1,9 +1,16 @@
+export interface INftSaleData {
+    isOnSale: boolean;
+    price: bigint;
+}
+
 export interface INft {
     id: bigint;
     owner: string;
     name: string;
     isCollectible: boolean;
     collectionId?: bigint;
+
+    saleData: INftSaleData;
 }
 
 export interface ICollection {
@@ -41,4 +48,7 @@ export abstract class IContract {
 
     abstract mintCommonNft(name: string): Promise<string>;
     abstract mintCollection(name: string, nftNames: string[]): Promise<string>;
+
+    abstract placeNftOnSell(id: bigint, price: bigint): Promise<string>;
+    abstract buyNft(id: bigint, price: bigint): Promise<string>;
 }

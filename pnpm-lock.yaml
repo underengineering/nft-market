@@ -5,12 +5,18 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@floating-ui/core':
+    specifier: ^1.5.0
+    version: 1.5.0
   '@metamask/providers':
     specifier: ^14.0.0
     version: 14.0.0
   '@svgdotjs/svg.js':
     specifier: ^3.2.0
     version: 3.2.0
+  svelte-floating-ui:
+    specifier: ^1.5.6
+    version: 1.5.6
   web3:
     specifier: ^4.2.2
     version: 4.2.2(typescript@5.2.2)
@@ -520,6 +526,23 @@ packages:
     resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
     engines: {node: '>=14'}
     dev: true
+
+  /@floating-ui/core@1.5.0:
+    resolution: {integrity: sha512-kK1h4m36DQ0UHGj5Ah4db7R0rHemTqqO0QLvUqi1/mUUp3LuAWbWxdxSIf/XsnH9VS6rRVPLJCncjRzUvyCLXg==}
+    dependencies:
+      '@floating-ui/utils': 0.1.6
+    dev: false
+
+  /@floating-ui/dom@1.5.3:
+    resolution: {integrity: sha512-ClAbQnEqJAKCJOEbbLo5IUlZHkNszqhuxS4fHAVxRPXPya6Ysf2G8KypnYcOTpx6I8xcgF9bbHb6g/2KpbV8qA==}
+    dependencies:
+      '@floating-ui/core': 1.5.0
+      '@floating-ui/utils': 0.1.6
+    dev: false
+
+  /@floating-ui/utils@0.1.6:
+    resolution: {integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==}
+    dev: false
 
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
@@ -2837,6 +2860,13 @@ packages:
       postcss-scss: 4.0.9(postcss@8.4.31)
       svelte: 4.2.3
     dev: true
+
+  /svelte-floating-ui@1.5.6:
+    resolution: {integrity: sha512-hM0mGxrO5+G725XW315Jd5JgeLb/SFdgRWWDz2YB30BaiP599TU/FKADNA6HMd+5yGsXx0rHGbq2Ynlq1IRucA==}
+    dependencies:
+      '@floating-ui/core': 1.5.0
+      '@floating-ui/dom': 1.5.3
+    dev: false
 
   /svelte-hmr@0.15.3(svelte@4.2.3):
     resolution: {integrity: sha512-41snaPswvSf8TJUhlkoJBekRrABDXDMdpNpT2tfHIv4JuhgvHqLMhEPGtaQn0BmbNSTkuz2Ed20DF2eHw0SmBQ==}

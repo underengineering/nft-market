@@ -56,15 +56,17 @@ export function fromWei(value: bigint) {
         if (value < unitValue || !unitValue) continue;
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return `${Web3.utils.fromWei(value, unit as any)} ${unit}`;
+        const fmtValue = Web3.utils.fromWei(value, unit as any);
+        return `${truncateStringFloat(fmtValue)} ${unit}`;
     }
 
-    return `${Web3.utils.fromWei(value, "ether")} ether`;
+    const fmtValue = Web3.utils.fromWei(value, "ether");
+    return `${truncateStringFloat(fmtValue)} ether`;
 }
 
 export function truncateStringFloat(value: string, precision: number = 2) {
     const [int, frac] = value.split(".");
-    return `${int}.${frac.slice(0, precision)}`;
+    return `${int}${frac !== undefined ? "." + frac.slice(0, precision) : ""}`;
 }
 
 function remap(

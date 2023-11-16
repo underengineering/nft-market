@@ -1,5 +1,10 @@
 export default [
     {
+        inputs: [],
+        stateMutability: "nonpayable",
+        type: "constructor",
+    },
+    {
         inputs: [
             {
                 internalType: "address",
@@ -222,6 +227,144 @@ export default [
     {
         inputs: [
             {
+                internalType: "address",
+                name: "account",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "id",
+                type: "uint256",
+            },
+        ],
+        name: "balanceOf",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address[]",
+                name: "accounts",
+                type: "address[]",
+            },
+            {
+                internalType: "uint256[]",
+                name: "ids",
+                type: "uint256[]",
+            },
+        ],
+        name: "balanceOfBatch",
+        outputs: [
+            {
+                internalType: "uint256[]",
+                name: "",
+                type: "uint256[]",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "id",
+                type: "uint256",
+            },
+        ],
+        name: "buyNft",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        name: "collectionAuctions",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "startPrice",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "maxPrice",
+                type: "uint256",
+            },
+            {
+                internalType: "bool",
+                name: "isValid",
+                type: "bool",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        name: "collectionSaleData",
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "price",
+                type: "uint256",
+            },
+            {
+                internalType: "bool",
+                name: "isValid",
+                type: "bool",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
+        name: "collections",
+        outputs: [
+            {
+                internalType: "string",
+                name: "name",
+                type: "string",
+            },
+            {
+                internalType: "bool",
+                name: "isOpen",
+                type: "bool",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
                 internalType: "uint256",
                 name: "collectionId",
                 type: "uint256",
@@ -230,6 +373,165 @@ export default [
         name: "finishAuction",
         outputs: [],
         stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "collectionId",
+                type: "uint256",
+            },
+        ],
+        name: "getAuction",
+        outputs: [
+            {
+                components: [
+                    {
+                        internalType: "uint256",
+                        name: "startPrice",
+                        type: "uint256",
+                    },
+                    {
+                        internalType: "uint256",
+                        name: "maxPrice",
+                        type: "uint256",
+                    },
+                    {
+                        components: [
+                            {
+                                internalType: "address",
+                                name: "bidder",
+                                type: "address",
+                            },
+                            {
+                                internalType: "uint256",
+                                name: "amount",
+                                type: "uint256",
+                            },
+                        ],
+                        internalType: "struct NFTContract.Bid[]",
+                        name: "bids",
+                        type: "tuple[]",
+                    },
+                    {
+                        internalType: "bool",
+                        name: "isValid",
+                        type: "bool",
+                    },
+                ],
+                internalType: "struct NFTContract.Auction",
+                name: "",
+                type: "tuple",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "getCollections",
+        outputs: [
+            {
+                components: [
+                    {
+                        internalType: "string",
+                        name: "name",
+                        type: "string",
+                    },
+                    {
+                        internalType: "bool",
+                        name: "isOpen",
+                        type: "bool",
+                    },
+                    {
+                        internalType: "uint256[]",
+                        name: "nftIds",
+                        type: "uint256[]",
+                    },
+                ],
+                internalType: "struct NFTContract.Collection[]",
+                name: "",
+                type: "tuple[]",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "getNfts",
+        outputs: [
+            {
+                components: [
+                    {
+                        internalType: "address",
+                        name: "owner",
+                        type: "address",
+                    },
+                    {
+                        internalType: "string",
+                        name: "name",
+                        type: "string",
+                    },
+                    {
+                        internalType: "bool",
+                        name: "isCollectible",
+                        type: "bool",
+                    },
+                    {
+                        internalType: "uint256",
+                        name: "collectionId",
+                        type: "uint256",
+                    },
+                    {
+                        components: [
+                            {
+                                internalType: "bool",
+                                name: "isOnSale",
+                                type: "bool",
+                            },
+                            {
+                                internalType: "uint256",
+                                name: "price",
+                                type: "uint256",
+                            },
+                        ],
+                        internalType: "struct NFTContract.NFTSaleData",
+                        name: "saleData",
+                        type: "tuple",
+                    },
+                ],
+                internalType: "struct NFTContract.NFT[]",
+                name: "",
+                type: "tuple[]",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "address",
+                name: "account",
+                type: "address",
+            },
+            {
+                internalType: "address",
+                name: "operator",
+                type: "address",
+            },
+        ],
+        name: "isApprovedForAll",
+        outputs: [
+            {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+            },
+        ],
+        stateMutability: "view",
         type: "function",
     },
     {
@@ -292,13 +594,64 @@ export default [
         inputs: [
             {
                 internalType: "uint256",
-                name: "id",
+                name: "",
                 type: "uint256",
             },
         ],
-        name: "NFTbuy",
-        outputs: [],
-        stateMutability: "payable",
+        name: "nfts",
+        outputs: [
+            {
+                internalType: "address",
+                name: "owner",
+                type: "address",
+            },
+            {
+                internalType: "string",
+                name: "name",
+                type: "string",
+            },
+            {
+                internalType: "bool",
+                name: "isCollectible",
+                type: "bool",
+            },
+            {
+                internalType: "uint256",
+                name: "collectionId",
+                type: "uint256",
+            },
+            {
+                components: [
+                    {
+                        internalType: "bool",
+                        name: "isOnSale",
+                        type: "bool",
+                    },
+                    {
+                        internalType: "uint256",
+                        name: "price",
+                        type: "uint256",
+                    },
+                ],
+                internalType: "struct NFTContract.NFTSaleData",
+                name: "saleData",
+                type: "tuple",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "owner",
+        outputs: [
+            {
+                internalType: "address",
+                name: "",
+                type: "address",
+            },
+        ],
+        stateMutability: "view",
         type: "function",
     },
     {
@@ -424,349 +777,6 @@ export default [
         name: "startAuction",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        stateMutability: "nonpayable",
-        type: "constructor",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "account",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "id",
-                type: "uint256",
-            },
-        ],
-        name: "balanceOf",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address[]",
-                name: "accounts",
-                type: "address[]",
-            },
-            {
-                internalType: "uint256[]",
-                name: "ids",
-                type: "uint256[]",
-            },
-        ],
-        name: "balanceOfBatch",
-        outputs: [
-            {
-                internalType: "uint256[]",
-                name: "",
-                type: "uint256[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "collectionAuctions",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "startPrice",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "maxPrice",
-                type: "uint256",
-            },
-            {
-                internalType: "bool",
-                name: "isValid",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "collections",
-        outputs: [
-            {
-                internalType: "string",
-                name: "name",
-                type: "string",
-            },
-            {
-                internalType: "bool",
-                name: "isOpen",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "collectionSaleData",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "price",
-                type: "uint256",
-            },
-            {
-                internalType: "bool",
-                name: "isValid",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "collectionId",
-                type: "uint256",
-            },
-        ],
-        name: "getAuction",
-        outputs: [
-            {
-                components: [
-                    {
-                        internalType: "uint256",
-                        name: "startPrice",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "maxPrice",
-                        type: "uint256",
-                    },
-                    {
-                        components: [
-                            {
-                                internalType: "address",
-                                name: "bidder",
-                                type: "address",
-                            },
-                            {
-                                internalType: "uint256",
-                                name: "amount",
-                                type: "uint256",
-                            },
-                        ],
-                        internalType: "struct NFTContract.Bid[]",
-                        name: "bids",
-                        type: "tuple[]",
-                    },
-                    {
-                        internalType: "bool",
-                        name: "isValid",
-                        type: "bool",
-                    },
-                ],
-                internalType: "struct NFTContract.Auction",
-                name: "",
-                type: "tuple",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getCollections",
-        outputs: [
-            {
-                components: [
-                    {
-                        internalType: "string",
-                        name: "name",
-                        type: "string",
-                    },
-                    {
-                        internalType: "bool",
-                        name: "isOpen",
-                        type: "bool",
-                    },
-                    {
-                        internalType: "uint256[]",
-                        name: "nftIds",
-                        type: "uint256[]",
-                    },
-                ],
-                internalType: "struct NFTContract.Collection[]",
-                name: "",
-                type: "tuple[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getNfts",
-        outputs: [
-            {
-                components: [
-                    {
-                        internalType: "address",
-                        name: "owner",
-                        type: "address",
-                    },
-                    {
-                        internalType: "string",
-                        name: "name",
-                        type: "string",
-                    },
-                    {
-                        internalType: "bool",
-                        name: "isCollectible",
-                        type: "bool",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "collectionId",
-                        type: "uint256",
-                    },
-                ],
-                internalType: "struct NFTContract.NFT[]",
-                name: "",
-                type: "tuple[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "account",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "operator",
-                type: "address",
-            },
-        ],
-        name: "isApprovedForAll",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "nfts",
-        outputs: [
-            {
-                internalType: "address",
-                name: "owner",
-                type: "address",
-            },
-            {
-                internalType: "string",
-                name: "name",
-                type: "string",
-            },
-            {
-                internalType: "bool",
-                name: "isCollectible",
-                type: "bool",
-            },
-            {
-                internalType: "uint256",
-                name: "collectionId",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "nftSaleData",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "price",
-                type: "uint256",
-            },
-            {
-                internalType: "bool",
-                name: "isValid",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "owner",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
         type: "function",
     },
     {

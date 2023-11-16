@@ -54,6 +54,7 @@ export class Contract extends IContract {
             collectionId: nft.isCollectible
                 ? (nft.collectionId as bigint)
                 : undefined,
+            saleData: { ...nft.saleData, price: nft.saleData.price as bigint },
         }));
     }
 
@@ -114,6 +115,24 @@ export class Contract extends IContract {
             this.contract.methods
                 .mintCollection(name, nftNames)
                 .send({ from: this._activeAddress })
+        );
+        return tx.transactionHash;
+    }
+
+    async placeNftOnSell(id: bigint, price: bigint): Promise<string> {
+        const tx = await guardWeb3(() =>
+            this.contract.methods
+                .placeNftOnSale(id, price)
+                .send({ from: this._activeAddress })
+        );
+        return tx.transactionHash;
+    }
+
+    async buyNft(id: bigint, price: bigint): Promise<string> {
+        const tx = await guardWeb3(() =>
+            this.contract.methods
+                .buyNft(id)
+                .send({ value: `${price}`, from: this._activeAddress })
         );
         return tx.transactionHash;
     }

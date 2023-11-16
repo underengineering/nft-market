@@ -44,24 +44,28 @@ export class MockContract extends IContract {
                 owner: "0x0",
                 name: "svelte is based",
                 isCollectible: false,
+                saleData: { isOnSale: false },
             },
             {
                 id: 1n,
                 owner: "0x1",
                 name: "svelte is based",
                 isCollectible: false,
+                saleData: { isOnSale: false },
             },
             {
                 id: 2n,
                 owner: "0x2",
                 name: "svelte is based",
                 isCollectible: false,
+                saleData: { isOnSale: false },
             },
             {
                 id: 3n,
                 owner: "0x3",
                 name: "svelte is based",
                 isCollectible: false,
+                saleData: { isOnSale: false },
             },
             {
                 id: 4n,
@@ -69,6 +73,7 @@ export class MockContract extends IContract {
                 name: "svelte is based 1 collectible",
                 isCollectible: true,
                 collectionId: 0n,
+                saleData: { isOnSale: false },
             },
             {
                 id: 4n,
@@ -76,6 +81,7 @@ export class MockContract extends IContract {
                 name: "svelte is based 2 collectible",
                 isCollectible: true,
                 collectionId: 0n,
+                saleData: { isOnSale: false },
             },
             {
                 id: 4n,
@@ -83,6 +89,7 @@ export class MockContract extends IContract {
                 name: "svelte is based 3 collectible",
                 isCollectible: true,
                 collectionId: 0n,
+                saleData: { isOnSale: false },
             },
         ];
     }
@@ -106,6 +113,14 @@ export class MockContract extends IContract {
     }
 
     async mintCollection(_name: string, _nftNames: string[]): Promise<string> {
+        return "0x0";
+    }
+
+    async placeNftOnSell(_id: bigint, _price: bigint): Promise<string> {
+        return "0x0";
+    }
+
+    async buyNft(_id: bigint, _price: bigint): Promise<string> {
         return "0x0";
     }
 }
