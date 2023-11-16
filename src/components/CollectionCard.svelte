@@ -1,11 +1,20 @@
 <script lang="ts">
-    import type { ICollection, INft } from "$lib/contract/icontract";
-    import { generateNftBackground } from "$lib/utils";
+    import MaterialSymbolsAccountBalance from "~icons/material-symbols/account-balance";
+    import contract from "$lib/contract";
+    import type { IAuction, ICollection, INft } from "$lib/contract/icontract";
+    import { fromWei, generateNftBackground } from "$lib/utils";
     import EvenGrid from "./EvenGrid.svelte";
     import NftCard from "./NftCard.svelte";
+    import storage from "$lib/storage";
+    import Button from "./Button.svelte";
+    import EthInput from "./EthInput.svelte";
+    import notifications from "$lib/notifications";
 
-    export let nfts: INft[];
     export let collection: ICollection;
+    export let nfts: INft[];
+
+    let auction: Promise<IAuction | undefined>;
+    $: auction = contract.getAuction(collection.id);
 
     let backgroundContainers: (HTMLDivElement | undefined)[] = [];
     $: {
@@ -18,20 +27,96 @@
         }
     }
 
-    let nftDialog: HTMLDialogElement | undefined;
+    let collectionDialog: HTMLDialogElement | undefined;
     function onClick() {
-        if (nftDialog === undefined) return;
+        if (collectionDialog === undefined) return;
 
-        if (!nftDialog.open) nftDialog.showModal();
-        else nftDialog.close();
+        if (!collectionDialog.open) collectionDialog.showModal();
+        else collectionDialog.close();
+    }
+
+    let startPrice = 0n;
+    let maxPrice = 0n;
+    async function onStartAuction(event: SubmitEvent) {
+        event.preventDefault();
+        if (collectionDialog === undefined) return;
+
+        try {
+            const txHash = await contract.startAuction(
+                collection.id,
+                startPrice,
+                maxPrice
+            );
+            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+        } finally {
+            collectionDialog.close();
+        }
+    }
+
+    let bidPrice = 0n;
+    async function onJoinAuction(event: SubmitEvent) {
+        event.preventDefault();
+        if (collectionDialog === undefined) return;
+
+        try {
+            const txHash = await contract.joinAuction(collection.id, bidPrice);
+            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+        } finally {
+            collectionDialog.close();
+        }
+    }
+
+    async function onFinishAuction() {
+        if (collectionDialog === undefined) return;
+
+        try {
+            const txHash = await contract.finishAuction(collection.id);
+            notifications.add("info", "Transaction sent", `Tx hash: ${txHash}`);
+        } finally {
+            collectionDialog.close();
+        }
     }
 </script>
 
 <dialog
     class="w-full max-w-4xl flex-col rounded bg-background-secondary p-3 shadow-xl open:flex"
-    bind:this={nftDialog}
+    bind:this={collectionDialog}
 >
-    <h2 class="text-center text-3xl">NFTs in this collection</h2>
+    <h2 class="text-center text-3xl">{collection.name}</h2>
+    <span>Open: {collection.isOpen ? "yes" : "no"}</span>
+    {#if !collection.isOpen}
+        {@const owner = nfts[0]?.owner}
+        <span>Owner: {owner}</span>
+        {#await auction then auction}
+            {#if auction === undefined && owner === $storage.selectedAddress}
+                <form class="flex flex-col gap-1" on:submit={onStartAuction}>
+                    <EthInput
+                        placeholder="Start price"
+                        bind:amount={startPrice}
+                    />
+                    <EthInput placeholder="Max price" bind:amount={maxPrice} />
+                    <Button class="flex items-center justify-center gap-1"
+                        ><MaterialSymbolsAccountBalance />Start auction</Button
+                    >
+                </form>
+            {:else if auction !== undefined && owner !== $storage.selectedAddress}
+                <span>Start bid price: {fromWei(auction.startPrice)}</span>
+                <span>Max bid price: {fromWei(auction.maxPrice)}</span>
+                <form class="flex flex-col gap-1" on:submit={onJoinAuction}>
+                    <EthInput placeholder="Bid price" bind:amount={bidPrice} />
+                    <Button class="flex items-center justify-center gap-1"
+                        >Join auction</Button
+                    >
+                </form>
+            {:else if auction !== undefined && owner === $storage.selectedAddress}
+                <Button
+                    class="flex items-center justify-center gap-1"
+                    on:click={onFinishAuction}>Finish auction</Button
+                >
+            {/if}
+        {/await}
+    {/if}
+    <span>NFTs in this collection:</span>
     <EvenGrid columnSize="146px">
         {#each nfts as nft}
             <NftCard {nft} />
@@ -51,7 +136,14 @@
         {/each}
     </button>
     <div class="flex flex-col leading-tight">
-        <span class="text-xs">{collection.id}</span>
+        <div class="flex w-full justify-between">
+            <span class="text-xs">{collection.id}</span>
+            {#await auction then auction}
+                {#if auction}
+                    <MaterialSymbolsAccountBalance />
+                {/if}
+            {/await}
+        </div>
         <span class="overflow-hidden text-ellipsis whitespace-nowrap"
             >{collection.name}</span
         >
