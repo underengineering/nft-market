@@ -36,7 +36,7 @@
         ([selectedAccount, admin]) => selectedAccount.address === admin
     );
 
-    const tabs = ["My account", "Auctions", "NFTs", "Collections"] as const;
+    const tabs = ["My account", "NFTs", "Collections"] as const;
     type TTab = (typeof tabs)[number];
     let activeTab: TTab = tabs[0];
 </script>
