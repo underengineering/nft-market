@@ -6,11 +6,10 @@
     import storage from "$lib/storage";
 
     export let accounts: IAccountInfo[];
-    export let selectedAccount: string;
 
     let accountIdx: number;
     $: accountIdx = accounts.findIndex(
-        (account) => account.address === selectedAccount
+        (account) => account.address === $storage.selectedAddress
     );
 
     let expanded = false;
@@ -37,7 +36,8 @@
             class=" absolute mt-10 flex flex-col gap-2 rounded bg-slate-300 p-1 shadow"
         >
             {#each accounts as account, idx}
-                {@const isSelected = account.address == selectedAccount}
+                {@const isSelected =
+                    account.address == $storage.selectedAddress}
                 <button
                     class="flex justify-between gap-8 rounded border-primary-500 p-1 {isSelected
                         ? 'border-l-4 bg-primary-200'

@@ -1,12 +1,12 @@
 <script lang="ts">
     import type { INft } from "$lib/contract/icontract";
+    import storage from "$lib/storage";
     import NftCard from "./NftCard.svelte";
 
-    export let selectedAccount: string;
     export let nfts: INft[];
 
     let ownedNfts: INft[];
-    $: ownedNfts = nfts.filter((nft) => nft.owner === selectedAccount);
+    $: ownedNfts = nfts.filter((nft) => nft.owner === $storage.selectedAddress);
 </script>
 
 <div class="flex w-full flex-col gap-2">

@@ -43,14 +43,11 @@
 
 <div class="flex h-full justify-center py-2">
     <div class="flex w-full max-w-3xl flex-col items-center gap-2">
-        {#await Promise.all( [accounts, selectedAccount] ) then [accounts, selectedAccount]}
+        {#await accounts then accounts}
             <div
                 class="flex w-full items-center justify-center rounded bg-background-secondary p-2 shadow"
             >
-                <AccountSelector
-                    {accounts}
-                    selectedAccount={selectedAccount.address}
-                />
+                <AccountSelector {accounts} />
             </div>
         {/await}
         {#await selectedAccount then selectedAccount}
@@ -61,10 +58,7 @@
                 <TabList {tabs} bind:activeTab />
                 {#if activeTab === "My account"}
                     {#await nfts then nfts}
-                        <NftOverview
-                            selectedAccount={selectedAccount.address}
-                            {nfts}
-                        />
+                        <NftOverview {nfts} />
                         {#await collections then collections}
                             <CollectionOverview {collections} {nfts} />
                         {/await}
