@@ -7,6 +7,7 @@
     import TabList from "$components/TabList.svelte";
     import WalletOverview from "$components/WalletOverview.svelte";
     import contract from "$lib/contract";
+    import type { ICollection, INft } from "$lib/contract/icontract";
     import storage from "$lib/storage";
     import { getAccountsWithBalance, type IAccountInfo } from "$lib/web3";
 
@@ -28,8 +29,14 @@
         });
     }
 
-    const nfts = contract.getNfts();
-    const collections = contract.getCollections();
+    let nfts: Promise<INft[]>;
+    let collections: Promise<ICollection[]>;
+    $: {
+        selectedAccount;
+
+        nfts = contract.getNfts();
+        collections = contract.getCollections();
+    }
 
     let isAdmin: Promise<boolean>;
     $: isAdmin = Promise.all([selectedAccount, contract.getAdmin()]).then(
