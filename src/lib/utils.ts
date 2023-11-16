@@ -139,8 +139,8 @@ export async function generateNftBackground(nft: INft, parent: HTMLElement) {
             const uX = unpackInt(3n);
             const uY = unpackInt(3n);
 
-            const x = remap(uX, 0, 0x7, 0, 100 - 15);
-            const y = remap(uY, 0, 0x7, 0, 100 - 15);
+            const x = remap(uX, 0, 0x7, 0, 100 - 0x7);
+            const y = remap(uY, 0, 0x7, 0, 100 - 0x7);
 
             const rect = svg.rect().x(x).y(y).width(15).height(15);
             if (filled) {
@@ -161,8 +161,8 @@ export async function generateNftBackground(nft: INft, parent: HTMLElement) {
 
             const radius = remap(uRadius, 0, 0x7, 5, 15);
 
-            const x = remap(uX, 0, 0x7, 0, 100 - 15);
-            const y = remap(uY, 0, 0x7, 0, 100 - 15);
+            const x = remap(uX, 0, 0x7, 0, 100 - 0x7);
+            const y = remap(uY, 0, 0x7, 0, 100 - 0x7);
 
             const circle = svg
                 .circle()
