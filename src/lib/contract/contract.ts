@@ -77,30 +77,6 @@ export class Contract extends IContract {
         };
     }
 
-    async getCollectionSalePrice(
-        collectionId: bigint
-    ): Promise<bigint | undefined> {
-        const entry = await guardWeb3(() =>
-            this.contract.methods
-                .collectionSaleData(collectionId as unknown as string)
-                .call()
-        );
-        if (!entry.isValid) return undefined;
-
-        return entry.price as bigint;
-    }
-
-    async getNftSalePrice(nftId: bigint): Promise<bigint | undefined> {
-        const entry = await guardWeb3(() =>
-            this.contract.methods
-                .collectionSaleData(nftId as unknown as string)
-                .call({ from: this._activeAddress })
-        );
-        if (!entry.isValid) return undefined;
-
-        return entry.price as bigint;
-    }
-
     async mintCommonNft(name: string): Promise<string> {
         const tx = await guardWeb3(() =>
             this.contract.methods
@@ -133,6 +109,37 @@ export class Contract extends IContract {
             this.contract.methods
                 .buyNft(id)
                 .send({ value: `${price}`, from: this._activeAddress })
+        );
+        return tx.transactionHash;
+    }
+
+    async startAuction(
+        id: bigint,
+        startPrice: bigint,
+        maxPrice: bigint
+    ): Promise<string> {
+        const tx = await guardWeb3(() =>
+            this.contract.methods
+                .startAuction(id, startPrice, maxPrice)
+                .send({ from: this._activeAddress })
+        );
+        return tx.transactionHash;
+    }
+
+    async joinAuction(id: bigint, amount: bigint): Promise<string> {
+        const tx = await guardWeb3(() =>
+            this.contract.methods
+                .joinAuction(id)
+                .send({ value: `${amount}`, from: this._activeAddress })
+        );
+        return tx.transactionHash;
+    }
+
+    async finishAuction(id: bigint): Promise<string> {
+        const tx = await guardWeb3(() =>
+            this.contract.methods
+                .finishAuction(id)
+                .send({ from: this._activeAddress })
         );
         return tx.transactionHash;
     }

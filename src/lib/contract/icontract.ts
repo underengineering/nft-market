@@ -41,14 +41,17 @@ export abstract class IContract {
     abstract getNfts(): Promise<INft[]>;
     abstract getAuction(collectionId: bigint): Promise<IAuction | undefined>;
 
-    abstract getCollectionSalePrice(
-        collectionId: bigint
-    ): Promise<bigint | undefined>;
-    abstract getNftSalePrice(nftId: bigint): Promise<bigint | undefined>;
-
     abstract mintCommonNft(name: string): Promise<string>;
     abstract mintCollection(name: string, nftNames: string[]): Promise<string>;
 
     abstract placeNftOnSell(id: bigint, price: bigint): Promise<string>;
     abstract buyNft(id: bigint, price: bigint): Promise<string>;
+
+    abstract startAuction(
+        id: bigint,
+        startPrice: bigint,
+        maxPrice: bigint
+    ): Promise<string>;
+    abstract joinAuction(id: bigint, amount: bigint): Promise<string>;
+    abstract finishAuction(id: bigint): Promise<string>;
 }
