@@ -93,8 +93,10 @@
                 </form>
             </ul>
         </div>
-        <Button class="flex items-center justify-center gap-1" type="submit"
-            ><MaterialSymbolsAdd />Mint</Button
+        <Button
+            class="flex items-center justify-center gap-1"
+            type="submit"
+            disabled={nftNames.length === 0}><MaterialSymbolsAdd />Mint</Button
         >
     </form>
 </dialog>
