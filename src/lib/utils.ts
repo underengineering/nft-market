@@ -17,8 +17,10 @@ interface IMetaMaskError<TData = unknown> extends Error {
 function isContractExecutionError(
     err: Error
 ): err is IMetaMaskError<ContractExecutionError> {
-    const metaMaskError = err as IMetaMaskError<ContractExecutionError>;
-    return metaMaskError.data.code === -32000;
+    const metaMaskError = err as Partial<
+        IMetaMaskError<ContractExecutionError>
+    >;
+    return metaMaskError?.data?.code === -32000;
 }
 
 export async function guardWeb3<T>(
