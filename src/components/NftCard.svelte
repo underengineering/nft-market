@@ -83,7 +83,7 @@
         {/if}
     {:else}
         <form class="flex items-center gap-1" on:submit={onSell}>
-            <EthInput bind:amount={price} />
+            <EthInput placeholder="Price" bind:amount={price} />
             <Button class="flex items-center gap-1" type="submit"
                 ><MaterialSymbolsSell />Sell</Button
             >

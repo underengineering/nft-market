@@ -4,6 +4,8 @@
     import { offset } from "svelte-floating-ui/core";
     import { writable } from "svelte/store";
 
+    export let placeholder: string;
+
     let value = "";
     let showTooltip = false;
 
@@ -46,7 +48,7 @@
         id="input"
         class="rounded"
         type="text"
-        placeholder="Price"
+        {placeholder}
         use:floatingRef
         bind:value
         on:focus={() => (showTooltip = true)}
