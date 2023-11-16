@@ -1,7 +1,8 @@
 <script lang="ts">
     import MaterialSymbolsSearchRounded from "~icons/material-symbols/search-rounded";
-    import Button from "./Button.svelte";
+    import MaterialSymbolsRefresh from "~icons/material-symbols/refresh";
     import MaterialSymbolsAdd from "~icons/material-symbols/add";
+    import Button from "./Button.svelte";
     import contract from "$lib/contract";
     import notifications from "$lib/notifications";
     import CollectionCard from "./CollectionCard.svelte";
@@ -11,8 +12,11 @@
 
     let mintDialog: HTMLDialogElement | undefined;
 
-    const collections = contract.getCollections();
-    const nfts = contract.getNfts();
+    let collections = contract.getCollections();
+    let nfts = contract.getNfts();
+
+    let refreshing = false;
+    $: Promise.all([collections, nfts]).finally(() => (refreshing = false));
 
     let searchQuery = "";
     let filteredCollections = collections;
@@ -112,6 +116,14 @@
             type="text"
             bind:value={searchQuery}
         />
+        <Button
+            disabled={refreshing}
+            on:click={() => {
+                refreshing = true;
+                nfts = contract.getNfts();
+                collections = contract.getCollections();
+            }}><MaterialSymbolsRefresh /></Button
+        >
         {#if isAdmin}
             <Button class="flex items-center gap-1" on:click={onOpenMintDialog}
                 ><MaterialSymbolsAdd />Mint new collection</Button
