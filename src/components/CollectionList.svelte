@@ -1,5 +1,6 @@
 <script lang="ts">
     import MaterialSymbolsSearchRounded from "~icons/material-symbols/search-rounded";
+    import MaterialSymbolsClose from "~icons/material-symbols/close";
     import MaterialSymbolsRefresh from "~icons/material-symbols/refresh";
     import MaterialSymbolsAdd from "~icons/material-symbols/add";
     import Button from "./Button.svelte";
@@ -85,8 +86,18 @@
         <div class="flex flex-col">
             <label for="nft-list">NFTs:</label>
             <ul id="nft-list" class="flex flex-col">
-                {#each nftNames as nftName}
-                    <li>{nftName}</li>
+                {#each nftNames as nftName, idx}
+                    <li class="flex gap-2">
+                        <Button
+                            class="flex items-center"
+                            type="button"
+                            on:click={() => {
+                                nftNames.splice(idx, 1);
+                                nftNames = nftNames;
+                            }}><MaterialSymbolsClose /></Button
+                        >
+                        {nftName}
+                    </li>
                 {/each}
                 <form class="flex gap-1" on:submit={onAddNft}>
                     <input
@@ -95,7 +106,10 @@
                         placeholder="NFT name"
                         bind:value={nftName}
                     />
-                    <Button class="flex items-center gap-1" type="submit"
+                    <Button
+                        class="flex items-center gap-1"
+                        type="submit"
+                        disabled={nftName.length === 0}
                         ><MaterialSymbolsAdd />Add</Button
                     >
                 </form>
