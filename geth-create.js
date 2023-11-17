@@ -78,6 +78,7 @@ function deployContract(abi, bytecode) {
                 console.log("Contract address:", contract.address);
         });
 
+        // Script just exits without sleeping
         admin.sleepBlocks(1);
                 `,
                 "http://127.0.0.1:8545",
